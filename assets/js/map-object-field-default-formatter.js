@@ -3,9 +3,8 @@
  */
 
 (function ($, Drupal, Backbone) {
-  /**
-   * Start app from Drupal behaviour.
-   */
+  'use strict';
+  // Start app from Drupal behaviour.
   Drupal.behaviors.map_object_field_default_formatter = {
     attach: function (context) {
       $('.map-object-field .map', context).each(function (index, item) {
@@ -89,7 +88,6 @@
                 overlayObject.infowindow = new google.maps.InfoWindow({
                   content: infowindowMarkup
                 });
-                ;
 
                 overlayObject.addListener('click', function (event) {
                   this.infowindow.setPosition(event.latLng);
@@ -100,9 +98,9 @@
           }
         }
         catch (e) {
-          console.log(e.name);
+          // TODO: implement
         }
       });
     }
-  }
+  };
 })(jQuery, Drupal);

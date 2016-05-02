@@ -3,6 +3,7 @@
  */
 
 (function ($, Drupal, Backbone) {
+  'use strict';
   var OverlayModel = Backbone.Model.extend({
     defaults: {
       type: '',
@@ -29,15 +30,15 @@
   });
 
   var OverlayView = Backbone.View.extend({
-    tagName: "tr",
+    tagName: 'tr',
 
-    className: "overlay-info",
+    className: 'overlay-info',
     template: _.template($('#overlay-info-template').html()),
     infoDialogTemplate: _.template($('#overlay-info-dialog-template').html()),
 
     events: {
-      "click span.overlay-edit": 'editOverlay',
-      "click span.overlay-remove": 'removeOverlay',
+      'click span.overlay-edit': 'editOverlay',
+      'click span.overlay-remove': 'removeOverlay'
     },
 
     initialize: function (options) {
@@ -102,13 +103,13 @@
       return overlay;
     },
 
-    //events
+    // Events
     editOverlay: function () {
       var currentView = this;
       var applyDialog = function () {
         var overlayParams = {
           title: $('input[name="title"]', this).val(),
-          description: $('textarea[name="description"]', this).val(),
+          description: $('textarea[name="description"]', this).val()
         };
         if ($('.fillColor')) {
           overlayParams.fillColor = $('.fillColor').text();
@@ -117,7 +118,7 @@
           overlayParams.strokeColor = $('.strokeColor').text();
         }
         currentView.model.setExtraParams(overlayParams);
-        $(this).dialog("close");
+        $(this).dialog('close');
       };
 
       var params = this.model.toJSON();
@@ -139,10 +140,10 @@
           params.strokeColorpicker = true;
           break;
       }
-      if (params.fillColorpicker && params.extraParams.fillColor == undefined) {
+      if (params.fillColorpicker && typeof params.extraParams.fillColor == 'undefined') {
         params.extraParams.fillColor = '#000000';
       }
-      if (params.strokeColorpicker && params.extraParams.strokeColor == undefined) {
+      if (params.strokeColorpicker && typeof params.extraParams.strokeColor == 'undefined') {
         params.extraParams.strokeColor = '#000000';
       }
 
@@ -160,29 +161,29 @@
           {
             text: Drupal.t('Cancel'),
             click: function () {
-              $(this).dialog("close");
+              $(this).dialog('close');
             }
-        }
+          }
         ],
         create: function (event, ui) {
+          var fillColorpicker;
           if (params.fillColorpicker) {
-            var fillColorpicker = $.farbtastic('.fillColorpicker', function (color) {
+            fillColorpicker = $.farbtastic('.fillColorpicker', function (color) {
               $('.fillColor').text(color);
             });
             fillColorpicker.setColor(params.extraParams.fillColor);
           }
           if (params.strokeColorpicker) {
-            var fillColorpicker = $.farbtastic('.strokeColorpicker', function (color) {
+            fillColorpicker = $.farbtastic('.strokeColorpicker', function (color) {
               $('.strokeColor').text(color);
             });
             fillColorpicker.setColor(params.extraParams.strokeColor);
           }
         },
         close: function (event, ui) {
-          $(this).dialog('destroy').remove()
-        },
+          $(this).dialog('destroy').remove();
+        }
       });
-
     },
 
     applyMapObjectParams: function () {
@@ -202,7 +203,7 @@
       this.options.overlay.setMap(null);
       this.model.destroy();
       this.remove();
-    },
+    }
   });
 
   /**
@@ -248,7 +249,6 @@
 
     serializeCollection: function () {
       this.mapObjectDataField.val(JSON.stringify(this.collection));
-      console.log('serializeCollection');
     },
 
     newOverlay: function (event) {
@@ -291,11 +291,7 @@
       overlayModel.on('change:extraParams', overlayView.applyMapObjectParams, overlayView);
     },
 
-    /**
-     * Initializes Google map and Drawing Manager.
-     *
-     * @param mapContainer
-     */
+    // Initializes Google map and Drawing Manager.
     initializeMap: function (mapContainer) {
       // Init map.
       var map_center_lat = $(mapContainer).parents('.fieldset-wrapper').find('.map_center_lat');
@@ -345,7 +341,7 @@
       var allowedObjectTypes = $(mapContainer).attr('data-allowed-object-types').split(',');
       var drawingModes = [];
       for (var i = 0; i < allowedObjectTypes.length; i++) {
-        drawingModes.push(google.maps.drawing.OverlayType[allowedObjectTypes[i].toUpperCase()])
+        drawingModes.push(google.maps.drawing.OverlayType[allowedObjectTypes[i].toUpperCase()]);
       }
 
       this.drawingManager = new google.maps.drawing.DrawingManager({
@@ -354,7 +350,7 @@
         drawingControlOptions: {
           position: google.maps.ControlPosition.TOP_RIGHT,
           drawingModes: drawingModes
-        },
+        }
       });
       this.drawingManager.setMap(this.map);
       if (this.mapObjectDataField.val()) {
@@ -364,7 +360,7 @@
       this.currentObjectsNumber = this.collection.length;
       var view = this;
       google.maps.event.addListener(this.drawingManager, 'overlaycomplete', function (event) {
-        if (view.maxObjectsNumber != NaN && view.currentObjectsNumber >= view.maxObjectsNumber) {
+        if (!isNaN(view.maxObjectsNumber) && view.currentObjectsNumber >= view.maxObjectsNumber) {
           event.overlay.setMap(null);
         }
         else {
@@ -384,11 +380,11 @@
         var overlaysInfoRows = $(this).parents('.fieldset-wrapper').find('.overlays-list');
         var mapContainer = $('.map-object-field-default-widget .map-preview', context)[index];
         if (!$(mapContainer).data('map-initialized')) {
-          if (typeof overlaysInfoRows != undefined) {
-            var overlayCollection = new OverlayCollection;
+          if (typeof overlaysInfoRows != 'undefined') {
+            var overlayCollection = new OverlayCollection();
             var savedOverlays = $(this).parents('.fieldset-wrapper').find('.map_object_data');
 
-            var mapObject = new MapObjectsView({
+            new MapObjectsView({
               el: overlaysInfoRows,
               collection: overlayCollection,
               mapContainer: mapContainer,
@@ -399,6 +395,6 @@
         }
       });
     }
-  }
+  };
 
 })(jQuery, Drupal, Backbone);

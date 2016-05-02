@@ -4,6 +4,7 @@
 
 var default_widget_settings_map;
 (function ($, Drupal) {
+  'use strict';
   Drupal.behaviors.map_object_field_default_widget_config = {
     attach: function (context) {
       if (typeof google !== 'undefined') {
@@ -18,7 +19,7 @@ var default_widget_settings_map;
             zoom: zoom,
             center: latlng,
             streetViewControl: false,
-            mapTypeId: google.maps.MapTypeId[mapType.toLocaleUpperCase()],
+            mapTypeId: google.maps.MapTypeId[mapType.toLocaleUpperCase()]
           };
 
           default_widget_settings_map = new google.maps.Map(this, mapOptions);
@@ -37,7 +38,6 @@ var default_widget_settings_map;
           });
         });
       }
-
     }
-  }
+  };
 })(jQuery, Drupal);
