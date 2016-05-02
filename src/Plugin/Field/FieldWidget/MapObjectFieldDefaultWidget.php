@@ -47,20 +47,16 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
    */
   public function settingsSummary() {
     $summary = [];
-    $settings = $this->getSettings();
-    $summary[] = $this->t('Map type: ') . $this->t(ucfirst($settings['map_type']));
-    $allowed_object_types = [];
-    array_walk($settings['object_types'], function ($v, $k) use (&$allowed_object_types) {
-      if (!empty($v)) {
-        $allowed_object_types[] = $v;
+    if($settings = $this->getSettings()) {
+      $summary[] = $this->t('Map type: ') . $this->t(ucfirst($settings['map_type']));
+      $allowed_object_types = $settings['object_types'];
+      $summary[] = $this->t('Allowed object types for drawing: ') . implode(', ', $allowed_object_types);
+      if (!empty($settings['max_objects_number'])) {
+        $summary[] = $this->t('Maximum number of objects: @num', ['@num' => $settings['max_objects_number']]);
       }
-    });
-    $summary[] = $this->t('Allowed object types for drawing: ') . implode(', ', $allowed_object_types);
-    if (!empty($settings['max_objects_number'])) {
-      $summary[] = $this->t('Maximum number of objects: @num', ['@num' => $settings['max_objects_number']]);
-    }
-    else {
-      $summary[] = $this->t('Maximum number of objects: @num', ['@num' => 'unlimited']);
+      else {
+        $summary[] = $this->t('Maximum number of objects: @num', ['@num' => 'unlimited']);
+      }
     }
     return $summary;
   }
