@@ -103,7 +103,6 @@
       return overlay;
     },
 
-    // Events
     editOverlay: function () {
       var currentView = this;
       var applyDialog = function () {
