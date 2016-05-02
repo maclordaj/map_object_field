@@ -1,0 +1,7 @@
+name: Map Object field
+type: module
+description: Implements field with Google Maps object
+core: 8.x
+package: Field types
+dependencies:
+  - field
