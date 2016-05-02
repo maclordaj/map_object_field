@@ -1,13 +1,9 @@
 <?php
-/**
- * @file
- * Contains \Drupal\map_object_field\MapObject\MapObjectService.
- */
-
 namespace Drupal\map_object_field\MapObject;
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Cache\CacheBackendInterface;
+
 /**
  * Contains methods to manipulate map objects.
  */
@@ -92,6 +88,7 @@ class MapObjectService {
         $this->saveMapObject($map_object);
         $result[] = $map_object;
       }
+      return $result;
     }
     else {
       $this->mapObjectDataMapper->deleteMapObject(

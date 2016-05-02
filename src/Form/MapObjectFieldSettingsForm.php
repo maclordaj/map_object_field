@@ -1,17 +1,14 @@
 <?php
-/**
- * @file
- * Contains \Drupal\map_object_field\Form\MapObjectFieldSettingsForm.
- */
-
 namespace Drupal\map_object_field\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+
 /**
  * Settings form.
  */
 class MapObjectFieldSettingsForm extends ConfigFormBase {
+
   /**
    * Returns a unique string identifying the form.
    *

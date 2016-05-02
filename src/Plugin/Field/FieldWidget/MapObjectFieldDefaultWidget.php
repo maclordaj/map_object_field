@@ -1,16 +1,10 @@
 <?php
-/**
- * @file
- * Contains \Drupal\map_object_field\Plugin\Field\FieldWidget\MapObjectFieldDefaultWidget.
- */
-
 namespace Drupal\map_object_field\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\map_object_field\Plugin\Field\TMapOptions;
-
 
 /**
  * Plugin implementation of the 'map_object_field_default' widget.
@@ -47,10 +41,13 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
    */
   public function settingsSummary() {
     $summary = [];
-    if($settings = $this->getSettings()) {
-      $summary[] = $this->t('Map type: ') . $this->t(ucfirst($settings['map_type']));
+    if ($settings = $this->getSettings()) {
+      $summary[] = $this->t(
+        'Map type: @maptype',
+        ['@maptype' => ucfirst($settings['map_type'])]
+      );
       $allowed_object_types = $settings['object_types'];
-      $summary[] = $this->t('Allowed object types for drawing: ') . implode(', ', $allowed_object_types);
+      $summary[] = $this->t('Allowed object types for drawing:') . implode(', ', $allowed_object_types);
       if (!empty($settings['max_objects_number'])) {
         $summary[] = $this->t('Maximum number of objects: @num', ['@num' => $settings['max_objects_number']]);
       }
@@ -88,7 +85,7 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
     }
 
     $settings_form_element['lat'] = [
-    // Dws means default_widget_settings.
+      // Dws means default_widget_settings.
       '#id' => 'map_dws_lat',
       '#type' => 'textfield',
       '#title' => $this->t('Latitude'),
@@ -206,7 +203,8 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
       $map_object_field_default = $map_object_service->getMapObjectsByFieldDataAsString(
         $entity->getEntityType()->id(),
         $entity->id(),
-        $entity->getEntityType()->isRevisionable() ? $entity->getRevisionId() : $entity->id(),
+        $entity->getEntityType()
+          ->isRevisionable() ? $entity->getRevisionId() : $entity->id(),
         $delta
       );
     }

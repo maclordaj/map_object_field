@@ -1,9 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\map_object_field\MapObject\MapObject.
- */
-
 namespace Drupal\map_object_field\MapObject;
 
 use JsonSerializable;
@@ -42,7 +37,6 @@ class MapObject implements JsonSerializable {
       }
     }
   }
-
 
   /**
    * Getter for id.

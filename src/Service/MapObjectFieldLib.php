@@ -1,9 +1,4 @@
 <?php
-/**
- * @file
- * Contains Drupal\map_object_field\Service\MapObjectFieldLib.
- */
-
 namespace Drupal\map_object_field\Service;
 
 /**
@@ -11,7 +6,8 @@ namespace Drupal\map_object_field\Service;
  *
  * @package Drupal\map_object_field\Service
  */
-class MapObjectFieldLibInterface implements MapObjectLibInterface {
+class MapObjectFieldLib implements MapObjectLibInterface {
+
   /**
    * Libraries used by widget.
    */

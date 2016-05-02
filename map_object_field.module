@@ -56,7 +56,6 @@ function map_object_field_theme() {
   return $theme;
 }
 
-
 /**
  * Implements hook_library_info_alter().
  */

@@ -1,9 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\map_object_field\Plugin\Field\FieldFormatter\MapObjectFieldDefaultFormatter.
- */
-
 namespace Drupal\map_object_field\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FormatterBase;

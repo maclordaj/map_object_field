@@ -1,11 +1,9 @@
 <?php
-/**
- * @file
- * Contains \Drupal\map_object_field\Plugin\Field\TMapOptions.
- */
-
 namespace Drupal\map_object_field\Plugin\Field;
 
+/**
+ * Contains methods for map options.
+ */
 trait TMapOptions {
 
   /**

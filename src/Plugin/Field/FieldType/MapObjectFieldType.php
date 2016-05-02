@@ -1,9 +1,4 @@
 <?php
-/**
- * @file
- * Contains \Drupal\map_object_field\Plugin\Field\FieldType\MapObjectFieldType.
- */
-
 namespace Drupal\map_object_field\Plugin\Field\FieldType;
 
 use Drupal\Component\Serialization\Json;
@@ -153,7 +148,6 @@ class MapObjectFieldType extends FieldItemBase {
       $deserialized_data
     );
   }
-
 
   /**
    * {@inheritdoc}

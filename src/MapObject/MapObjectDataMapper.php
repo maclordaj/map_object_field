@@ -1,12 +1,8 @@
 <?php
-/**
- * @file
- * Contains \Drupal\map_object_field\MapObject\MapObjectDataMapper.
- */
-
 namespace Drupal\map_object_field\MapObject;
 
 use Drupal\Core\Database\Connection;
+
 /**
  * Saves and retrieves data from database.
  */
@@ -89,7 +85,6 @@ class MapObjectDataMapper {
     return $result->fetchAll();
   }
 
-
   /**
    * Retrieves map object extra params from DB.
    */
@@ -154,7 +149,6 @@ class MapObjectDataMapper {
       $query->execute();
     }
   }
-
 
   /**
    * Saves object extraparams to DB.
