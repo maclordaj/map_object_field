@@ -1,12 +1,16 @@
 <?php
 /**
- * @file contains \Drupal\map_object_field\MapObject\MapObject.
+ * @file
+ * Contains \Drupal\map_object_field\MapObject\MapObject.
  */
+
 namespace Drupal\map_object_field\MapObject;
 
-use Drupal\Core\Database\Database;
 use JsonSerializable;
 
+/**
+ * Map Object.
+ */
 class MapObject implements JsonSerializable {
   protected $id = '';
   protected $entityType = '';
@@ -27,6 +31,9 @@ class MapObject implements JsonSerializable {
     'extraParams' => 'extraParams',
   ];
 
+  /**
+   * Constructor.
+   */
   public function __construct($data) {
     foreach ($data as $key => $val) {
       if (array_key_exists($key, $this->map)) {
@@ -37,98 +44,107 @@ class MapObject implements JsonSerializable {
   }
 
 
+  /**
+   * Getter for id.
+   */
   public function getId() {
     return $this->id;
   }
 
+  /**
+   * Setter for id.
+   */
   public function setId($id) {
     $this->id = $id;
   }
 
   /**
-   * @return mixed
+   * Getter for entityType.
    */
   public function getEntityType() {
     return $this->entityType;
   }
 
   /**
-   * @param mixed $entityType
+   * Setter for entityType.
    */
-  public function setEntityType($entityType) {
-    $this->entityType = $entityType;
+  public function setEntityType($entity_type) {
+    $this->entityType = $entity_type;
   }
 
   /**
-   * @return mixed
+   * Getter for entityId.
    */
   public function getEntityId() {
     return $this->entityId;
   }
 
   /**
-   * @param mixed $entityId
+   * Setter for entityId.
    */
-  public function setEntityId($entityId) {
-    $this->entityId = $entityId;
+  public function setEntityId($entity_id) {
+    $this->entityId = $entity_id;
   }
 
   /**
-   * @return mixed
+   * Getter for entityRevisionId.
    */
   public function getEntityRevisionId() {
     return $this->entityRevisionId;
   }
 
   /**
-   * @param mixed $entityRevisionId
+   * Setter for entityRevisionId.
    */
-  public function setEntityRevisionId($entityRevisionId) {
-    $this->entityRevisionId = $entityRevisionId;
+  public function setEntityRevisionId($entity_revision_id) {
+    $this->entityRevisionId = $entity_revision_id;
   }
 
   /**
-   * @return mixed
+   * Getter for entityFieldDelta.
    */
   public function getEntityFieldDelta() {
     return $this->entityFieldDelta;
   }
 
   /**
-   * @param mixed $entityFieldDelta
+   * Setter fot entityFieldDelta.
    */
-  public function setEntityFieldDelta($entityFieldDelta) {
-    $this->entityFieldDelta = $entityFieldDelta;
+  public function setEntityFieldDelta($entity_field_delta) {
+    $this->entityFieldDelta = $entity_field_delta;
   }
 
   /**
-   * @return mixed
+   * Getter for objectType.
    */
   public function getObjectType() {
     return $this->objectType;
   }
 
   /**
-   * @param mixed $objectType
+   * Setter for objectType.
    */
-  public function setObjectType($objectType) {
-    $this->objectType = $objectType;
+  public function setObjectType($object_type) {
+    $this->objectType = $object_type;
   }
 
   /**
-   * @return array
+   * Getter for objectCoordinates.
    */
   public function getObjectCoordinates() {
     return $this->objectCoordinates;
   }
 
   /**
-   * @param array $objectCoordinates
+   * Setter for objectCoordinates.
    */
-  public function setObjectCoordinates($objectCoordinates) {
-    $this->objectCoordinates = $objectCoordinates;
+  public function setObjectCoordinates($object_coordiantes) {
+    $this->objectCoordinates = $object_coordiantes;
   }
 
+  /**
+   * Getter for extraParam.
+   */
   public function getExtraParam($key) {
     if (array_key_exists($key, $this->extraParams)) {
       return $this->extraParams[$key];
@@ -136,18 +152,30 @@ class MapObject implements JsonSerializable {
     return NULL;
   }
 
+  /**
+   * Setter for extraParam.
+   */
   public function setExtraParam($key, $val) {
     $this->extraParams[$key] = $val;
   }
 
+  /**
+   * Getter for extraParams.
+   */
   public function getExtraParams() {
     return $this->extraParams;
   }
 
+  /**
+   * Setter for extraParams.
+   */
   public function setExtraParams($val) {
     $this->extraParams = $val;
   }
 
+  /**
+   * JsonSerializable intrface implementation.
+   */
   public function jsonSerialize() {
     $inverted_map = array_flip($this->map);
     $result = [];
@@ -158,4 +186,5 @@ class MapObject implements JsonSerializable {
     }
     return $result;
   }
+
 }

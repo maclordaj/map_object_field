@@ -1,3 +1,7 @@
+/**
+ * @file
+ */
+
 var default_widget_settings_map;
 (function ($, Drupal) {
   Drupal.behaviors.map_object_field_default_widget_config = {

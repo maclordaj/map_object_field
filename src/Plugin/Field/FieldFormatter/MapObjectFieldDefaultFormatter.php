@@ -8,7 +8,6 @@ namespace Drupal\map_object_field\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -53,7 +52,7 @@ class MapObjectFieldDefaultFormatter extends FormatterBase {
         '#mapWidth' => $this->getSetting('map_width'),
         '#mapHeight' => $this->getSetting('map_height'),
       ];
-      /** @var \Drupal\map_object_field\Service\IMapObjectLib $map_bject_field_lib */
+      /** @var \Drupal\map_object_field\Service\MapObjectLibInterface $map_bject_field_lib */
       $map_bject_field_lib = \Drupal::service('map_object_field_lib');
       foreach ($map_bject_field_lib->getLibrariesForFormatter() as $lib) {
         $element['#attached']['library'][] = $lib;
@@ -63,6 +62,9 @@ class MapObjectFieldDefaultFormatter extends FormatterBase {
     return $elements;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public static function defaultSettings() {
     return array(
       'map_width' => '100%',
@@ -70,6 +72,9 @@ class MapObjectFieldDefaultFormatter extends FormatterBase {
     ) + parent::defaultSettings();
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
     $settings = $this->getSettings();
@@ -90,6 +95,9 @@ class MapObjectFieldDefaultFormatter extends FormatterBase {
     return $elements;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function settingsSummary() {
     $settings = $this->getSettings();
     $summary[] = $this->t(
@@ -102,4 +110,5 @@ class MapObjectFieldDefaultFormatter extends FormatterBase {
     );
     return $summary;
   }
+
 }

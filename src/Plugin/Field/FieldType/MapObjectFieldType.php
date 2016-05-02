@@ -9,7 +9,6 @@ namespace Drupal\map_object_field\Plugin\Field\FieldType;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\map_object_field\Plugin\Field\TMapOptions;
 
@@ -41,7 +40,7 @@ class MapObjectFieldType extends FieldItemBase {
         'map_type' => [
           'type' => 'varchar',
           'length' => 20,
-          'description' => 'terrain, hybrid...'
+          'description' => 'terrain, hybrid...',
         ],
         'map_center_lat' => [
           'type' => 'float',
@@ -87,7 +86,8 @@ class MapObjectFieldType extends FieldItemBase {
         $entity->id(),
         $entity->getEntityType()
           ->isRevisionable() ? $entity->getRevisionId() : 1,
-        $this->getName()//delta
+      // Delta.
+        $this->getName()
       );
       if (!empty($map_object_field_data)) {
         return FALSE;
@@ -122,22 +122,22 @@ class MapObjectFieldType extends FieldItemBase {
    * {@inheritdoc}
    */
   public function postSave($update) {
-    static $isDeleted = [];
+    static $is_deleted = [];
     /** @var \Drupal\map_object_field\MapObject\MapObjectService $map_object_service */
     $map_object_service = \Drupal::service('map_object.service');
     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
     $entity = $this->getParent()->getEntity();
 
-    // Now we have to delete all map objects for revision
+    // Now we have to delete all map objects for revision.
     $key = "{$entity->getEntityTypeId()}:{$entity->id()}:{$entity->getRevisionId()}";
 
-    if (!isset($isDeleted[$key])) {
+    if (!isset($is_deleted[$key])) {
       $map_object_service->deleteAllMapObjectsForEntity(
         $entity->getEntityTypeId(),
         $entity->id(),
         $entity->getRevisionId()
       );
-      $isDeleted[$key] = TRUE;
+      $is_deleted[$key] = TRUE;
     }
 
     $field_values = $this->getValue();
@@ -184,4 +184,5 @@ class MapObjectFieldType extends FieldItemBase {
         ->isRevisionable() ? $entity->getRevisionId() : NULL
     );
   }
+
 }

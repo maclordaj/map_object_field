@@ -1,3 +1,7 @@
+/**
+ * @file
+ */
+
 (function ($, Drupal, Backbone) {
   /**
    * Start app from Drupal behaviour.
@@ -9,7 +13,6 @@
         var lng = $(this).attr('data-center-lng');
         var zoom = parseInt($(this).attr('data-zoom'));
         var mapType = $(this).attr('data-map-type');
-
 
         var latlng = new google.maps.LatLng(lat, lng);
         var mapOptions = {
@@ -37,19 +40,23 @@
                   }
                   overlayObject = new google.maps.Marker(mapParams);
                   break;
+
                 case 'circle':
                   mapParams.center = new google.maps.LatLng(overlay.coordinates[0].lat, overlay.coordinates[0].lng);
                   mapParams.radius = parseFloat(overlay.extraParams.radius);
                   overlayObject = new google.maps.Circle(mapParams);
                   break;
+
                 case 'polygon':
                   mapParams.paths = overlay.coordinates;
                   overlayObject = new google.maps.Polygon(mapParams);
                   break;
+
                 case 'polyline':
                   mapParams.path = overlay.coordinates;
                   overlayObject = new google.maps.Polyline(mapParams);
                   break;
+
                 case 'rectangle':
                   mapParams.bounds = new google.maps.LatLngBounds(overlay.coordinates[0], overlay.coordinates[1]);
                   overlayObject = new google.maps.Rectangle(mapParams);

@@ -27,6 +27,9 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
 
   use TMapOptions;
 
+  /**
+   * {@inheritdoc}
+   */
   public static function defaultSettings() {
     return [
       'lat' => 0,
@@ -62,6 +65,9 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
     return $summary;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
     $settings_form_element['map_default_widget_heading_markup'] = [
@@ -79,14 +85,15 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
       '#suffix' => '</section>',
     ];
 
-    /** @var \Drupal\map_object_field\Service\IMapObjectLib $map_bject_field_lib */
+    /** @var \Drupal\map_object_field\Service\MapObjectLibInterface $map_bject_field_lib */
     $map_bject_field_lib = \Drupal::service('map_object_field_lib');
     foreach ($map_bject_field_lib->getLibrariesForWidgetConfig() as $lib) {
       $settings_form_element['map']['#attached']['library'][] = $lib;
     }
 
     $settings_form_element['lat'] = [
-      '#id' => 'map_dws_lat',//dws means default_widget_settings
+    // Dws means default_widget_settings.
+      '#id' => 'map_dws_lat',
       '#type' => 'textfield',
       '#title' => $this->t('Latitude'),
       '#size' => '20',
@@ -162,7 +169,6 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
 
     $widget_settings = $this->getSettings();
 
-
     $element['map_object_name'] = [
       '#title' => $this->t('Map Object Name'),
       '#type' => 'textfield',
@@ -189,11 +195,11 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
       ],
     ];
 
-    // Set default for map_object_data
+    // Set default for map_object_data.
     $field_name = $this->fieldDefinition->getName();
     $input_values = $form_state->getUserInput();
-    //$form_state->isProcessingInput();
-    if(isset($input_values[$field_name][$delta]['map_object_data'])) {
+    // $form_state->isProcessingInput();
+    if (isset($input_values[$field_name][$delta]['map_object_data'])) {
       $map_object_field_default = $input_values[$field_name][$delta]['map_object_data'];
     }
     else {
@@ -217,7 +223,7 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
       ],
     ];
 
-    // Fill map init settings
+    // Fill map init settings.
     if (isset($items[$delta]->map_center_lat)) {
       $map_center_lat = $items[$delta]->map_center_lat;
     }
@@ -275,29 +281,29 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
       '#suffix' => '</section>',
     ];
 
-    //Initial display settings
-    $mapOptions = [];
+    // Initial display settings.
+    $map_options = [];
     if (!empty($items[$delta]->map_center_lat) && !empty($items[$delta]->map_center_lng)) {
-      $mapOptions['init-center-lat'] = $items[$delta]->map_center_lat;
-      $mapOptions['init-center-lng'] = $items[$delta]->map_center_lng;
+      $map_options['init-center-lat'] = $items[$delta]->map_center_lat;
+      $map_options['init-center-lng'] = $items[$delta]->map_center_lng;
     }
     else {
-      $mapOptions['init-center-lat'] = $widget_settings['lat'];
-      $mapOptions['init-center-lng'] = $widget_settings['lng'];
+      $map_options['init-center-lat'] = $widget_settings['lat'];
+      $map_options['init-center-lng'] = $widget_settings['lng'];
     }
     if (!empty($items[$delta]->map_zoom)) {
-      $mapOptions['init-zoom'] = $items[$delta]->map_zoom;
+      $map_options['init-zoom'] = $items[$delta]->map_zoom;
     }
     else {
-      $mapOptions['init-zoom'] = $widget_settings['zoom'];
+      $map_options['init-zoom'] = $widget_settings['zoom'];
     }
-    $mapOptions['init-map-type'] = $map_type;
-    $mapOptions['allowed-object-types'] = implode(',', $object_types);
-    $mapOptions['max-objects-number'] = $widget_settings['max_objects_number'];
+    $map_options['init-map-type'] = $map_type;
+    $map_options['allowed-object-types'] = implode(',', $object_types);
+    $map_options['max-objects-number'] = $widget_settings['max_objects_number'];
 
     $preview = [
       '#theme' => 'map_default_widget_preview',
-      '#mapOptions' => $mapOptions
+      '#mapOptions' => $map_options,
     ];
     $element['preview'] = [
       '#type' => 'item',
@@ -312,7 +318,7 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
       '#title' => $this->t('Map'),
     ];
 
-    /** @var \Drupal\map_object_field\Service\IMapObjectLib $map_bject_field_lib */
+    /** @var \Drupal\map_object_field\Service\MapObjectLibInterface $map_bject_field_lib */
     $map_bject_field_lib = \Drupal::service('map_object_field_lib');
     foreach ($map_bject_field_lib->getLibrariesForWidget() as $lib) {
       $element['#attached']['library'][] = $lib;
@@ -320,4 +326,5 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
 
     return $element;
   }
+
 }

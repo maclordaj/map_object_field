@@ -1,23 +1,34 @@
 <?php
 /**
- * @file contains \Drupal\map_object_field\MapObject\MapObjectDataMapper.
+ * @file
+ * Contains \Drupal\map_object_field\MapObject\MapObjectDataMapper.
  */
+
 namespace Drupal\map_object_field\MapObject;
 
 use Drupal\Core\Database\Connection;
-use Symfony\Component\Validator\Constraints\Null;
-
+/**
+ * Saves and retrieves data from database.
+ */
 class MapObjectDataMapper {
 
   /**
+   * DBConnections object.
+   *
    * @var \Drupal\Core\Database\Connection $dbConnection
    */
   protected $dbConnection;
 
+  /**
+   * Constructor.
+   */
   public function __construct(Connection $connection) {
     $this->dbConnection = $connection;
   }
 
+  /**
+   * Retrieves map objects from db.
+   */
   public function getMapObjectsByFieldData($entity_type, $entity_id, $revision_id, $delta) {
     $result = [];
     $query_map_object = $this->dbConnection->select('map_object', 'mo')
@@ -62,6 +73,9 @@ class MapObjectDataMapper {
     return $result;
   }
 
+  /**
+   * Retrieves map object coordinates from DB.
+   */
   public function getMapObjectCoordinates($map_object_id) {
     $query_coordinates = $this->dbConnection->select('map_object_coordinate', 'mc')
       ->fields('mc');
@@ -76,6 +90,9 @@ class MapObjectDataMapper {
   }
 
 
+  /**
+   * Retrieves map object extra params from DB.
+   */
   public function getMapObjectExtraParams($map_object_id) {
     $query_coordinates = $this->dbConnection
       ->select('map_object_extra_params', 'me')
@@ -91,8 +108,7 @@ class MapObjectDataMapper {
   }
 
   /**
-   * @param \Drupal\map_object_field\MapObject\MapObject $map_object
-   * @return bool
+   * Saves map object to DB.
    */
   public function saveMapObject(MapObject $map_object) {
     try {
@@ -119,6 +135,9 @@ class MapObjectDataMapper {
     }
   }
 
+  /**
+   * Saves object coordinates to DB.
+   */
   protected function saveObjectCoordinates($map_object_id, array $coordinates) {
     $this->deleteObjectCoordinates($map_object_id);
     if (!empty($coordinates)) {
@@ -137,6 +156,9 @@ class MapObjectDataMapper {
   }
 
 
+  /**
+   * Saves object extraparams to DB.
+   */
   protected function saveObjectExtraParams($map_object_id, $extra_params) {
     $this->deleteObjectExtraParams($map_object_id);
     if (!empty($extra_params)) {
@@ -159,6 +181,9 @@ class MapObjectDataMapper {
     }
   }
 
+  /**
+   * Deletes map object from DB.
+   */
   public function deleteMapObject($entity_type, $entity_id, $revision_id, $delta = NULL) {
     $query = $this->dbConnection->select('map_object', 'mo')
       ->fields('mo', ['map_object_id'])
@@ -181,6 +206,9 @@ class MapObjectDataMapper {
     }
   }
 
+  /**
+   * Deletes map object coordinates from DB.
+   */
   public function deleteObjectCoordinates($id) {
     $query = $this->dbConnection->delete('map_object_coordinate');
     if (is_array($id)) {
@@ -192,6 +220,9 @@ class MapObjectDataMapper {
     $query->execute();
   }
 
+  /**
+   * Deletes map object extra params from db.
+   */
   public function deleteObjectExtraParams($id) {
     $query = $this->dbConnection->delete('map_object_extra_params');
     if (is_array($id)) {
@@ -202,4 +233,5 @@ class MapObjectDataMapper {
     }
     $query->execute();
   }
+
 }

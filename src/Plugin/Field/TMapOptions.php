@@ -1,12 +1,23 @@
 <?php
+/**
+ * @file
+ * Contains \Drupal\map_object_field\Plugin\Field\TMapOptions.
+ */
+
 namespace Drupal\map_object_field\Plugin\Field;
 
 trait TMapOptions {
 
+  /**
+   * Returns array of map object types.
+   */
   public function getMapObjectTypes() {
     return \Drupal::config('map.options')->get('drawing_object_types');
   }
 
+  /**
+   * Returns array of map object types with labels.
+   */
   public function getMapObjectTypesWithLabels() {
     $result = [];
     $drawing_object_types = \Drupal::config('map.options')
@@ -17,10 +28,16 @@ trait TMapOptions {
     return $result;
   }
 
+  /**
+   * Returns array of map types.
+   */
   public function getMapTypes() {
     return \Drupal::config('map.options')->get('map_types');
   }
 
+  /**
+   * Returns array of map types with labels.
+   */
   public function getMapTypesWithLabels() {
     $result = [];
     $map_types = \Drupal::config('map.options')->get('map_types');
@@ -29,4 +46,5 @@ trait TMapOptions {
     }
     return $result;
   }
+
 }

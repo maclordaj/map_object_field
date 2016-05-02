@@ -50,5 +50,3 @@ google-map-api-async:
 google-map-api-drawing:
   js:
     //maps.googleapis.com/maps/api/js?libraries=drawing,geometry: { type: external }
-
-

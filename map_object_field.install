@@ -1,5 +1,10 @@
 <?php
 /**
+ * @file
+ * Contains Drupal hooks implementations.
+ */
+
+/**
  * Implements hook_schema().
  */
 function map_object_field_schema() {

@@ -1,3 +1,7 @@
+/**
+ * @file
+ */
+
 (function ($, Drupal, Backbone) {
   var OverlayModel = Backbone.Model.extend({
     defaults: {
@@ -72,19 +76,23 @@
             mapParams.icon = this.model.getExtraParam('icon');
             overlay = new google.maps.Marker(mapParams);
             break;
+
           case 'circle':
             mapParams.center = new google.maps.LatLng(coordinates[0].lat, coordinates[0].lng);
             mapParams.radius = parseFloat(this.model.getExtraParam('radius'));
             overlay = new google.maps.Circle(mapParams);
             break;
+
           case 'polygon':
             mapParams.paths = coordinates;
             overlay = new google.maps.Polygon(mapParams);
             break;
+
           case 'polyline':
             mapParams.path = coordinates;
             overlay = new google.maps.Polyline(mapParams);
             break;
+
           case 'rectangle':
             mapParams.bounds = new google.maps.LatLngBounds(coordinates[0], coordinates[1]);
             overlay = new google.maps.Rectangle(mapParams);
@@ -118,10 +126,12 @@
           params.fillColorpicker = false;
           params.strokeColorpicker = false;
           break;
+
         case 'polyline':
           params.fillColorpicker = false;
           params.strokeColorpicker = true;
           break;
+
         case 'circle':
         case 'polygon':
         case 'rectangle':
@@ -152,7 +162,7 @@
             click: function () {
               $(this).dialog("close");
             }
-          }
+        }
         ],
         create: function (event, ui) {
           if (params.fillColorpicker) {
@@ -241,7 +251,6 @@
       console.log('serializeCollection');
     },
 
-
     newOverlay: function (event) {
       var overlayModel = new OverlayModel({type: event.type});
       switch (event.type) {
@@ -249,6 +258,7 @@
           overlayModel.setExtraParams({icon: event.overlay.icon});
           overlayModel.set('coordinates', [event.overlay.getPosition()]);
           break;
+
         case 'circle':
           overlayModel.set('coordinates', [
             {
@@ -258,10 +268,12 @@
           ]);
           overlayModel.setExtraParams({radius: event.overlay.getRadius()});
           break;
+
         case 'polygon':
         case 'polyline':
           overlayModel.set('coordinates', event.overlay.getPath().getArray());
           break;
+
         case 'rectangle':
           var b = event.overlay.getBounds();
           overlayModel.set('coordinates', [b.getSouthWest(), b.getNorthEast()]);
@@ -280,11 +292,12 @@
     },
 
     /**
-     * Initializes Google map and Drawing Manager
+     * Initializes Google map and Drawing Manager.
+     *
      * @param mapContainer
      */
     initializeMap: function (mapContainer) {
-      //Init map
+      // Init map.
       var map_center_lat = $(mapContainer).parents('.fieldset-wrapper').find('.map_center_lat');
       var map_center_lng = $(mapContainer).parents('.fieldset-wrapper').find('.map_center_lng');
       var map_zoom = $(mapContainer).parents('.fieldset-wrapper').find('.map_zoom');
@@ -306,11 +319,10 @@
       };
       this.map = new google.maps.Map(mapContainer, mapOptions);
 
-      //Preview containers(spans with text)
+      // Preview containers(spans with text).
       var map_preview_lat = $(mapContainer).parents('.map-object-field-default-widget').find('.map-preview-lat');
       var map_preview_lng = $(mapContainer).parents('.map-object-field-default-widget').find('.map-preview-lng');
       var map_preview_zoom = $(mapContainer).parents('.map-object-field-default-widget').find('.map-preview-zoom');
-
 
       var map = this.map;
       this.map.addListener('zoom_changed', function () {
@@ -329,7 +341,7 @@
         $(map_type).val(map.mapTypeId);
       });
 
-      //Init Drawing manager
+      // Init Drawing manager.
       var allowedObjectTypes = $(mapContainer).attr('data-allowed-object-types').split(',');
       var drawingModes = [];
       for (var i = 0; i < allowedObjectTypes.length; i++) {

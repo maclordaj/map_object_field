@@ -73,7 +73,7 @@ function map_object_field_library_info_alter(&$libraries, $extension) {
         $key = array_keys($libraries[$lib]['js'])[0];
         $new_key = $key . '&key=' . $google_map_api_key;
         $libraries[$lib]['js'] = [
-          $new_key => $libraries[$lib]['js'][$key]
+          $new_key => $libraries[$lib]['js'][$key],
         ];
       }
     }
