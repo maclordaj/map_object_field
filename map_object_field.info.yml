@@ -1,6 +1,6 @@
 name: Map Object Field
 type: module
-description: Implements field wich allows editors to draw shapes on maps. Google maps is supported.
+description: Implements field which allows editors to draw shapes on maps. Google maps is supported.
 core: 8.x
 package: Field types
 dependencies:
