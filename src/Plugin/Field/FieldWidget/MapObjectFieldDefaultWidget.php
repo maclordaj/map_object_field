@@ -30,7 +30,7 @@ class MapObjectFieldDefaultWidget extends WidgetBase {
       'lng' => 0,
       'zoom' => 1,
       'map_type' => 'terrain',
-      'object_types' => \Drupal::config('map.options')
+      'object_types' => \Drupal::config('map_object_field.settings')
         ->get('drawing_object_types'),
       'max_objects_number' => '',
     ] + parent::defaultSettings();

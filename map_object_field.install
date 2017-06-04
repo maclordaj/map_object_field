@@ -143,5 +143,5 @@ function map_object_field_schema() {
  * Implements hook_uninstall().
  */
 function map_object_field_uninstall() {
-  \Drupal::configFactory()->getEditable('map.options')->delete();
+  \Drupal::configFactory()->getEditable('map_object_field.settings')->delete();
 }
